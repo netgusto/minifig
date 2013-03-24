@@ -8,7 +8,7 @@ function loadImage($absfilepath) {
 	return FALSE;
 }
 
-$basepath = realpath('.') . '/parts-400/';
+$basepath = realpath('.') . '/assets/sprites/parts-400/';
 $hat = intval($_GET["hat"]);
 $face = intval($_GET["face"]);
 $torso = intval($_GET["torso"]);
