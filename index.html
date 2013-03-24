@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang=en>
+<head>
+<meta charset=utf-8>
+<title>Minifig builder</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="stylesheet" href="hat.css" />
+<link rel="stylesheet" href="face.css" />
+<link rel="stylesheet" href="torso.css" />
+<link rel="stylesheet" href="leg.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<style>
+
+	div.buttons {
+		clear: both;
+	}
+
+	div.buttons.download {
+		text-align: center;
+		margin-top: 1em;
+		width: 200px;
+	}
+
+	.row {
+		display: block;
+		clear: both;
+	}
+
+	.button {
+		float: left;
+		width: 100px;
+		text-align: center
+	}
+
+	.view {
+		float: left;
+	}
+
+	.row-hat .view {
+		position: absolute;
+	}
+
+	.builder {
+		position: absolute;
+	}
+</style>
+<script>
+
+$(function() {
+
+	var iMaxHat = 26;
+	var iMaxFace = 16;
+	var iMaxTorso = 33;
+	var iMaxLeg = 25;
+
+	var hat = $('.row-hat .view i');
+	var face = $('.row-face .view i');
+	var torso = $('.row-torso .view i');
+	var leg = $('.row-leg .view i');
+
+	var getRank = function(o) {
+
+		if(o.hasClass('hat')) {
+			var myRegexp = /(?:^|\s)hat-hat([0-9]+?)(?:\s|$)/g;
+		} else if(o.hasClass('face')) {
+			var myRegexp = /(?:^|\s)face-face([0-9]+?)(?:\s|$)/g;
+		} else if(o.hasClass('torso')) {
+			var myRegexp = /(?:^|\s)torso-torso([0-9]+?)(?:\s|$)/g;
+		} else if(o.hasClass('leg')) {
+			var myRegexp = /(?:^|\s)leg-legs([0-9]+?)(?:\s|$)/g;
+		}
+
+		var match = myRegexp.exec(o.attr('class'));
+		return parseInt(match[1]);
+	}
+
+	var prevHatRank = function(rank) {
+		return (rank > 1) ? rank - 1 : iMaxHat;
+	}
+
+	var nextHatRank = function(rank) {
+		return (rank < iMaxHat) ? rank + 1 : 1;
+	}
+
+	var prevFaceRank = function(rank) {
+		return (rank > 1) ? rank - 1 : iMaxFace;
+	}
+
+	var nextFaceRank = function(rank) {
+		return (rank < iMaxFace) ? rank + 1 : 1;
+	}
+
+	var prevTorsoRank = function(rank) {
+		return (rank > 1) ? rank - 1 : iMaxTorso;
+	}
+
+	var nextTorsoRank = function(rank) {
+		return (rank < iMaxTorso) ? rank + 1 : 1;
+	}
+
+	var prevLegRank = function(rank) {
+		return (rank > 1) ? rank - 1 : iMaxLeg;
+	}
+
+	var nextLegRank = function(rank) {
+		return (rank < iMaxLeg) ? rank + 1 : 1;
+	}
+
+	$('.button-prev-hat button').click(function() {
+		var rank = getRank(hat);
+		hat.removeClass('hat-hat' + rank);
+		hat.addClass('hat-hat' + prevHatRank(rank));
+	});
+
+	$('.button-next-hat button').click(function() {
+		var rank = getRank(hat);
+		hat.removeClass('hat-hat' + rank);
+		hat.addClass('hat-hat' + nextHatRank(rank));
+	});
+
+	$('.button-prev-face button').click(function() {
+		var rank = getRank(face);
+		face.removeClass('face-face' + rank);
+		face.addClass('face-face' + prevFaceRank(rank));
+	});
+
+	$('.button-next-face button').click(function() {
+		var rank = getRank(face);
+		face.removeClass('face-face' + rank);
+		face.addClass('face-face' + nextFaceRank(rank));
+	});
+
+	$('.button-prev-torso button').click(function() {
+		var rank = getRank(torso);
+		torso.removeClass('torso-torso' + rank);
+		torso.addClass('torso-torso' + prevTorsoRank(rank));
+	});
+
+	$('.button-next-torso button').click(function() {
+		var rank = getRank(torso);
+		torso.removeClass('torso-torso' + rank);
+		torso.addClass('torso-torso' + nextTorsoRank(rank));
+	});
+
+	$('.button-prev-leg button').click(function() {
+		var rank = getRank(leg);
+		leg.removeClass('leg-legs' + rank);
+		leg.addClass('leg-legs' + prevLegRank(rank));
+	});
+
+	$('.button-next-leg button').click(function() {
+		var rank = getRank(leg);
+		leg.removeClass('leg-legs' + rank);
+		leg.addClass('leg-legs' + nextLegRank(rank));
+	});
+
+	$('.buttons.download button').click(function() {
+		var rankhat = getRank(hat);
+		var rankface = getRank(face);
+		var ranktorso = getRank(torso);
+		var rankleg = getRank(leg);
+
+		document.location.href = 'build.php?hat=' + rankhat + '&face=' + rankface + '&torso=' + ranktorso + '&leg=' + rankleg;
+	});
+
+});
+
+</script>
+</head>
+<body>
+
+
+<div class="buttons">
+	<div class="button button-prev-hat">
+		<button>&lt; hat</button>
+	</div>
+	<div class="button button-next-hat">
+		<button>hat &gt;</button>
+	</div>
+</div>
+
+<div class="buttons">
+	<div class="button button-prev-face">
+		<button>face &lt;</button>
+	</div>
+	<div class="button button-next-face">
+		<button>face &gt;</button>
+	</div>
+</div>
+
+<div class="buttons">
+	<div class="button button-prev-torso">
+		<button>torso &lt;</button>
+	</div>
+	<div class="button button-next-torso">
+		<button>torso &gt;</button>
+	</div>
+</div>
+
+<div class="buttons">
+	<div class="button button-prev-leg">
+		<button>legs &lt;</button>
+	</div>
+	<div class="button button-next-leg">
+		<button>legs &gt;</button>
+	</div>
+</div>
+
+<div class="buttons download"><button>Download this minifig</button></div>
+
+<div class="builder">
+	<div class="row row-hat">
+		<div class="view">
+			<i class="hat hat-hat26"></i>
+		</div>
+	</div>
+	<div class="row row-face">
+		<div class="view">
+			<i class="face face-face1"></i>
+		</div>
+	</div>
+	<div class="row row-torso">
+		<div class="view">
+			<i class="torso torso-torso32"></i>
+		</div>
+	</div>
+	<div class="row row-leg">
+		<div class="view">
+			<i class="leg leg-legs7"></i>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

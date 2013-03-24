@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang=en>
+<head>
+<meta charset=utf-8>
+<title>Builder</title>
+<link rel="stylesheet" href="hat.css" />
+<link rel="stylesheet" href="face.css" />
+<link rel="stylesheet" href="torso.css" />
+<link rel="stylesheet" href="leg.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<style>
+	.row {
+		display: block;
+		clear: both;
+	}
+
+	.button {
+		float: left;
+		width: 100px;
+		text-align: center
+	}
+
+	.view {
+		float: left;
+	}
+
+	.row-hat .view {
+		position: relative;
+		top: 42px;
+	}
+</style>
+<script>
+
+$(function() {
+
+	var iMaxHat = 25;
+	var iMaxFace = 16;
+	var iMaxTorso = 33;
+	var iMaxLeg = 25;
+
+	var hat = $('.row-hat .view i');
+	var face = $('.row-face .view i');
+	var torso = $('.row-torso .view i');
+	var leg = $('.row-leg .view i');
+
+	var getRank = function(o) {
+
+		if(o.hasClass('hat')) {
+			var myRegexp = /(?:^|\s)hat-hat([0-9]+?)(?:\s|$)/g;
+		} else if(o.hasClass('face')) {
+			var myRegexp = /(?:^|\s)face-face([0-9]+?)(?:\s|$)/g;
+		} else if(o.hasClass('torso')) {
+			var myRegexp = /(?:^|\s)torso-torso([0-9]+?)(?:\s|$)/g;
+		} else if(o.hasClass('leg')) {
+			var myRegexp = /(?:^|\s)leg-legs([0-9]+?)(?:\s|$)/g;
+		}
+
+		var match = myRegexp.exec(o.attr('class'));
+		return parseInt(match[1]);
+	}
+
+	var prevHatRank = function(rank) {
+		return (rank > 1) ? rank - 1 : iMaxHat;
+	}
+
+	var nextHatRank = function(rank) {
+		return (rank < iMaxHat) ? rank + 1 : 1;
+	}
+
+	var prevFaceRank = function(rank) {
+		return (rank > 1) ? rank - 1 : iMaxFace;
+	}
+
+	var nextFaceRank = function(rank) {
+		return (rank < iMaxFace) ? rank + 1 : 1;
+	}
+
+	var prevTorsoRank = function(rank) {
+		return (rank > 1) ? rank - 1 : iMaxTorso;
+	}
+
+	var nextTorsoRank = function(rank) {
+		return (rank < iMaxTorso) ? rank + 1 : 1;
+	}
+
+	var prevLegRank = function(rank) {
+		return (rank > 1) ? rank - 1 : iMaxLeg;
+	}
+
+	var nextLegRank = function(rank) {
+		return (rank < iMaxLeg) ? rank + 1 : 1;
+	}
+
+	$('.row-hat .button-prev button').click(function() {
+		var rank = getRank(hat);
+		hat.removeClass('hat-hat' + rank);
+		hat.addClass('hat-hat' + prevHatRank(rank));
+	});
+
+	$('.row-hat .button-next button').click(function() {
+		var rank = getRank(hat);
+		hat.removeClass('hat-hat' + rank);
+		hat.addClass('hat-hat' + nextHatRank(rank));
+	});
+
+	$('.row-face .button-prev button').click(function() {
+		var rank = getRank(face);
+		face.removeClass('face-face' + rank);
+		face.addClass('face-face' + prevFaceRank(rank));
+	});
+
+	$('.row-face .button-next button').click(function() {
+		var rank = getRank(face);
+		face.removeClass('face-face' + rank);
+		face.addClass('face-face' + nextFaceRank(rank));
+	});
+
+	$('.row-torso .button-prev button').click(function() {
+		var rank = getRank(torso);
+		torso.removeClass('torso-torso' + rank);
+		torso.addClass('torso-torso' + prevTorsoRank(rank));
+	});
+
+	$('.row-torso .button-next button').click(function() {
+		var rank = getRank(torso);
+		torso.removeClass('torso-torso' + rank);
+		torso.addClass('torso-torso' + nextTorsoRank(rank));
+	});
+
+	$('.row-leg .button-prev button').click(function() {
+		var rank = getRank(leg);
+		leg.removeClass('leg-legs' + rank);
+		leg.addClass('leg-legs' + prevLegRank(rank));
+	});
+
+	$('.row-leg .button-next button').click(function() {
+		var rank = getRank(leg);
+		leg.removeClass('leg-legs' + rank);
+		leg.addClass('leg-legs' + nextLegRank(rank));
+	});
+
+});
+
+</script>
+</head>
+<body>
+
+<div class="builder">
+	<div class="row row-hat">
+		<div class="button button-prev">
+			<button>&lt;</button>
+		</div>
+		<div class="view">
+			<i class="hat hat-hat1"></i>
+		</div>
+		<div class="button button-next">
+			<button>&gt;</button>
+		</div>
+	</div>
+	<div class="row row-face">
+		<div class="button button-prev">
+			<button>&lt;</button>
+		</div>
+		<div class="view">
+			<i class="face face-face1"></i>
+		</div>
+		<div class="button button-next">
+			<button>&gt;</button>
+		</div>
+	</div>
+	<div class="row row-torso">
+		<div class="button button-prev">
+			<button>&lt;</button>
+		</div>
+		<div class="view">
+			<i class="torso torso-torso1"></i>
+		</div>
+		<div class="button button-next">
+			<button>&gt;</button>
+		</div>
+	</div>
+	<div class="row row-leg">
+		<div class="button button-prev">
+			<button>&lt;</button>
+		</div>
+		<div class="view">
+			<i class="leg leg-legs1"></i>
+		</div>
+		<div class="button button-next">
+			<button>&gt;</button>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>
